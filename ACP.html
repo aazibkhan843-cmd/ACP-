@@ -1,379 +1,486 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ACP Pradyuman Voice Board</title>
+<meta name="description" content="ACP Pradyuman CID Voice Control Panel">
+
+<!-- Preconnect for Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-
-min-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-padding:20px;
-
-overflow:hidden;
-
-background:
-linear-gradient(
-rgba(0,0,0,.45),
-rgba(0,0,0,.82)
-),
-url("https://upload.wikimedia.org/wikipedia/en/8/88/Shivaji_Satam.jpg");
-
-background-size:cover;
-
-background-position:center;
-
-background-repeat:no-repeat;
-
-}
-
-/* Glow effect */
-
-body::before{
-
-content:"";
-
-position:fixed;
-
-width:150%;
-
-height:150%;
-
-background:
-radial-gradient(
-circle,
-rgba(255,255,255,.08),
-transparent 60%
-);
-
-animation:
-rotate 18s linear infinite;
-
-pointer-events:none;
-
-}
-
-@keyframes rotate{
-
-from{
-transform:rotate(0);
-}
-
-to{
-transform:rotate(360deg);
-}
-
-}
-
-.container{
-
-position:relative;
-
-z-index:10;
-
-width:min(430px,100%);
-
-padding:40px 28px;
-
-border-radius:28px;
-
-text-align:center;
-
-backdrop-filter:blur(18px);
-
-background:
-rgba(255,255,255,.08);
-
-border:
-1px solid rgba(255,255,255,.15);
-
-box-shadow:
-0 0 50px rgba(255,255,255,.15);
-
-}
-
-h1{
-
-color:white;
-
-font-size:clamp(28px,6vw,40px);
-
-margin-bottom:10px;
-
-letter-spacing:2px;
-
-text-shadow:
-0 0 30px gold;
-
-}
-
-.subtitle{
-
-color:#ddd;
-
-margin-bottom:30px;
-
-font-size:clamp(13px,3vw,16px);
-
-}
-
-button{
-
-width:100%;
-
-padding:18px;
-
-margin:14px 0;
-
-border:none;
-
-border-radius:18px;
-
-font-size:clamp(16px,4vw,19px);
-
-font-weight:bold;
-
-cursor:pointer;
-
-color:white;
-
-transition:.3s;
-
-}
-
-.btn1{
-
-background:
-linear-gradient(
-45deg,
-#ff512f,
-#dd2476
-);
-
-}
-
-.btn2{
-
-background:
-linear-gradient(
-45deg,
-#4776E6,
-#8E54E9
-);
-
-}
-
-.btn3{
-
-background:
-linear-gradient(
-45deg,
-#00b09b,
-#96c93d
-);
-
-}
-
-button:hover{
-
-transform:
-translateY(-4px)
-scale(1.02);
-
-box-shadow:
-0 0 30px rgba(255,255,255,.6);
-
-}
-
-button:active{
-
-transform:
-scale(.98);
-
-}
-
-.quote{
-
-margin-top:20px;
-
-color:white;
-
-font-size:clamp(14px,3vw,18px);
-
-opacity:.9;
-
-}
-
-.playing{
-
-animation:
-pulse .8s infinite;
-
-}
-
-@keyframes pulse{
-
-0%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.03);
-}
-
-100%{
-transform:scale(1);
-}
-
-}
-
-/* Mobile */
-
-@media (max-width:600px){
-
-.container{
-
-padding:28px 18px;
-
-border-radius:22px;
-
-}
-
-button{
-
-padding:16px;
-
-}
-
-}
-
-/* Small height screens */
-
-@media (max-height:700px){
-
-body{
-
-align-items:flex-start;
-
-padding-top:30px;
-
-}
-
-}
-
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --gold: #f5c842;
+    --red: #e63946;
+    --blue: #4776E6;
+    --purple: #8E54E9;
+    --green: #00b09b;
+    --lime: #96c93d;
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #0a0a0f;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.85)),
+      url("https://upload.wikimedia.org/wikipedia/en/8/88/Shivaji_Satam.jpg");
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  /* Ambient glow */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: -25%;
+    background: radial-gradient(circle at 50% 50%, rgba(245,200,66,0.06), transparent 60%);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* Scanline texture */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    width: min(420px, 100%);
+    padding: 40px 28px 36px;
+    border-radius: 24px;
+    text-align: center;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.05),
+      0 8px 60px rgba(0,0,0,0.6),
+      0 0 80px rgba(245,200,66,0.08);
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-block;
+    background: rgba(245,200,66,0.12);
+    border: 1px solid rgba(245,200,66,0.3);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', Arial Narrow, sans-serif;
+    color: white;
+    font-size: clamp(38px, 9vw, 54px);
+    letter-spacing: 6px;
+    line-height: 1;
+    text-shadow:
+      0 0 20px rgba(245,200,66,0.5),
+      0 0 60px rgba(245,200,66,0.2);
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  /* Divider */
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+
+  /* Buttons */
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  button {
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 16px;
+    font-size: clamp(15px, 4vw, 17px);
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+
+  button:hover::before  { background: rgba(255,255,255,0.08); }
+  button:active::before { background: rgba(0,0,0,0.15); }
+
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.15);
+  }
+
+  button:active {
+    transform: scale(0.97) translateY(0);
+  }
+
+  .btn1 { background: linear-gradient(135deg, #ff512f, #dd2476); }
+  .btn2 { background: linear-gradient(135deg, #4776E6, #8E54E9); }
+  .btn3 { background: linear-gradient(135deg, #00b09b, #96c93d); }
+
+  .btn-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .btn-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .btn-label {
+    flex: 1;
+    text-align: left;
+  }
+
+  .btn-label small {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1px;
+  }
+
+  /* Playing animation */
+  @keyframes pulse {
+    0%   { box-shadow: 0 10px 35px rgba(0,0,0,0.4), 0 0 0 0 rgba(255,255,255,0.4); }
+    50%  { box-shadow: 0 10px 35px rgba(0,0,0,0.4), 0 0 0 8px rgba(255,255,255,0.0); }
+    100% { box-shadow: 0 10px 35px rgba(0,0,0,0.4), 0 0 0 0 rgba(255,255,255,0.0); }
+  }
+
+  button.playing {
+    animation: pulse 0.9s infinite;
+    transform: translateY(-3px) scale(1.01);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: rgba(255,255,255,0.6);
+    border-radius: 0 0 16px 16px;
+    transition: width 0.1s linear;
+  }
+
+  /* Quote */
+  .quote-block {
+    margin-top: 28px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .quote-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+
+  .quote-text {
+    color: rgba(255,255,255,0.9);
+    font-size: clamp(14px, 3.5vw, 16px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* Status */
+  .status {
+    margin-top: 18px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: rgba(255,255,255,0.35);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .status.active {
+    color: var(--gold);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .status.active .status-dot {
+    animation: blink 0.8s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.1; }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .container { padding: 32px 18px 28px; border-radius: 20px; }
+  }
+
+  @media (max-height: 700px) {
+    body { align-items: flex-start; padding-top: 24px; }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    body::before, button.playing { animation: none; }
+    button { transition: none; }
+  }
 </style>
-
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>ACP PRADYUMAN</h1>
+  <div class="badge">⚖️ CID Mumbai</div>
+  <h1>ACP PRADYUMAN</h1>
+  <div class="subtitle">Voice Control Panel</div>
+  <div class="divider"></div>
 
-<div class="subtitle">
-CID Voice Control Panel
+  <div class="buttons">
+
+    <button class="btn1" id="btn1" onclick="playVoice(1, this)" aria-label="Play clip 1">
+      <div class="btn-inner">
+        <span class="btn-icon">🔍</span>
+        <span class="btn-label">
+          <small>Clip 1</small>
+          do not press
+        </span>
+      </div>
+      <div class="progress-bar" id="prog1"></div>
+    </button>
+
+    <button class="btn2" id="btn2" onclick="playVoice(2, this)" aria-label="Play clip 2">
+      <div class="btn-inner">
+        <span class="btn-icon">🕵</span>
+        <span class="btn-label">
+          <small>Clip 2</small>
+          don't touch
+        </span>
+      </div>
+      <div class="progress-bar" id="prog2"></div>
+    </button>
+
+    <button class="btn3" id="btn3" onclick="playVoice(3, this)" aria-label="Play clip 3">
+      <div class="btn-inner">
+        <span class="btn-icon">⚡</span>
+        <span class="btn-label">
+          <small>Clip 3</small>
+          dabao na
+        </span>
+      </div>
+      <div class="progress-bar" id="prog3"></div>
+    </button>
+
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-label">Iconic Line</div>
+    <div class="quote-text" id="quote">"maa zudd gyi!"</div>
+  </div>
+
+  <div class="status" id="status">
+    <div class="status-dot"></div>
+    <span id="status-text">Ready</span>
+  </div>
+
 </div>
 
-<button class="btn1"
-onclick="playVoice(1,this)">
-🔍 do not press
-</button>
+<!--
+  ⚠️  AUDIO SETUP INSTRUCTIONS (for deployment)
+  ================================================
+  Place your .mp3 files in the same folder as this HTML file and
+  rename them exactly as below, OR update the src= paths to match
+  your own filenames / CDN URLs.
 
-<button class="btn2"
-onclick="playVoice(2,this)">
-🕵 don't touch
-</button>
+  Clip 1  →  audio/clip1.mp3
+  Clip 2  →  audio/clip2.mp3
+  Clip 3  →  audio/clip3.mp3
 
-<button class="btn3"
-onclick="playVoice(3,this)">
-⚡ dabao na
-</button>
-
-<div class="quote">
-"maa zudd gyi!"
-</div>
-
-</div>
-
-<audio
-id="audio1"
-src="kya-cheda-bhosdi_dVETGE7r.mp3">
-</audio>
-
-<audio
-id="audio2"
-src="chodu-cid-chut.mp3">
-</audio>
-
-<audio
-id="audio3"
-src="nikal-jao-mere-lo-e-ke-samne-se-y19lype_5gfrtDen.mp3">
-</audio>
+  If you're hosting on Netlify / Vercel / GitHub Pages, just drop
+  the audio/ folder alongside index.html and you're done.
+-->
+<audio id="audio1" src="audio/clip1.mp3" preload="none"></audio>
+<audio id="audio2" src="audio/clip2.mp3" preload="none"></audio>
+<audio id="audio3" src="audio/clip3.mp3" preload="none"></audio>
 
 <script>
+  const quotes = [
+    '"maa zudd gyi!"',
+    '"Ye case itna simple nahi hai..."',
+    '"Daya, darwaza tod do!"',
+    '"Aakhir yahi sach hai..."',
+    '"CID kabhi haar nahi maanti!"'
+  ];
 
-function playVoice(num,btn){
+  let progressTimers = {};
 
-document
-.querySelectorAll("audio")
-.forEach(a=>{
+  function stopAll() {
+    [1, 2, 3].forEach(n => {
+      const a = document.getElementById('audio' + n);
+      a.pause();
+      a.currentTime = 0;
+      const btn = document.getElementById('btn' + n);
+      btn.classList.remove('playing');
+      const prog = document.getElementById('prog' + n);
+      prog.style.width = '0%';
+      clearInterval(progressTimers[n]);
+    });
+    setStatus('Ready', false);
+  }
 
-a.pause();
+  function setStatus(text, active) {
+    const el = document.getElementById('status');
+    const tx = document.getElementById('status-text');
+    tx.textContent = text;
+    el.classList.toggle('active', active);
+  }
 
-a.currentTime=0;
+  function updateProgress(num, audio) {
+    clearInterval(progressTimers[num]);
+    progressTimers[num] = setInterval(() => {
+      const prog = document.getElementById('prog' + num);
+      if (audio.duration) {
+        prog.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
+      if (audio.ended || audio.paused) clearInterval(progressTimers[num]);
+    }, 80);
+  }
 
-});
+  function playVoice(num, btn) {
+    const audio = document.getElementById('audio' + num);
 
-document
-.querySelectorAll("button")
-.forEach(b=>
-b.classList.remove(
-"playing"
-));
+    // Toggle — pressing same button again stops it
+    if (!audio.paused) {
+      stopAll();
+      return;
+    }
 
-btn.classList.add(
-"playing"
-);
+    stopAll();
 
-const audio=
-document.getElementById(
-"audio"+num
-);
+    btn.classList.add('playing');
 
-audio.play();
+    // Rotate quote
+    document.getElementById('quote').textContent =
+      quotes[Math.floor(Math.random() * quotes.length)];
 
-audio.onended=
-()=>{
+    setStatus('Playing clip ' + num + '...', true);
+    updateProgress(num, audio);
 
-btn.classList.remove(
-"playing"
+    audio.play().catch(() => {
+      // Audio file not found — show a friendly note
+      setStatus('⚠️ Audio file not found — see HTML comments', false);
+      btn.classList.remove('playing');
+    });
 
-);
+    audio.onended = () => {
+      btn.classList.remove('playing');
+      document.getElementById('prog' + num).style.width = '0%';
+      clearInterval(progressTimers[num]);
+      setStatus('Ready', false);
+    };
+  }
 
-};
-
-}
-
+  // Keyboard support: 1, 2, 3 keys
+  document.addEventListener('keydown', e => {
+    const map = { '1': [1, 'btn1'], '2': [2, 'btn2'], '3': [3, 'btn3'] };
+    if (map[e.key]) {
+      const [num, id] = map[e.key];
+      playVoice(num, document.getElementById(id));
+    }
+    if (e.key === 'Escape') stopAll();
+  });
 </script>
 
 </body>
